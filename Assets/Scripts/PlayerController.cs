@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     public float speedPlayer;
     private Vector3 movePlayer;
+    public float gravity = 9.8f;
+    public float fallVelocity;
     
     public Camera mainCamera;
     private Vector3 camForward;
@@ -37,11 +40,15 @@ public class PlayerController : MonoBehaviour
    
         movePlayer = playerInput.x * camRight + playerInput.z * camForward;
 
+        movePlayer = movePlayer * speedPlayer;
+
         //El jugador se movera en direccion a la camara
         player.transform.LookAt(player.transform.position + movePlayer);
 
+        SetGravity();
+
         //Tema de llamadas de movimiento
-        player.Move(movePlayer * speedPlayer * Time.deltaTime);
+        player.Move(movePlayer * Time.deltaTime);
 
         //Velocidad que tiene el jugador en cada momento (se le puede quitar)
         Debug.Log(player.velocity.magnitude);
@@ -61,4 +68,22 @@ public class PlayerController : MonoBehaviour
          camForward = camForward.normalized;
          camRight = camRight.normalized;
     }
+
+    
+    void SetGravity()
+    {
+        
+
+        if(player.isGrounded)
+        {
+            fallVelocity = -gravity * Time.deltaTime;
+            movePlayer.y = fallVelocity;
+        }
+        else
+        {
+            fallVelocity -= gravity * Time.deltaTime;
+            movePlayer.y = fallVelocity;
+        }
+    }
+
 }
