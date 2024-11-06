@@ -18,6 +18,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 camForward;
     private Vector3 camRight;
 
+    public bool isOnSlope = false;
+    private Vector3 hitNormal;
+
+    public float slideSpeed = 6.0f;
+    public float slopeForceDown = 6.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +96,24 @@ public class PlayerController : MonoBehaviour
             fallVelocity -= gravity * Time.deltaTime;
             movePlayer.y = fallVelocity;
         }
+
+        slideDown();
     }
 
+    public void slideDown() 
+    {
+        isOnSlope = Vector3.Angle(Vector3.up, hitNormal) >= player.slopeLimit;
+        if (isOnSlope)
+        {
+            movePlayer.x += (hitNormal.x * (1f- hitNormal.y)) * slideSpeed;
+            movePlayer.z += (hitNormal.z * (1f- hitNormal.y)) * slideSpeed;
+            movePlayer.y += slopeForceDown;
+        }
+    }
+
+    //Funcion para dectetar si el character controller colisiona con con colisionador
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        hitNormal = hit.normal;
+    }
 }
