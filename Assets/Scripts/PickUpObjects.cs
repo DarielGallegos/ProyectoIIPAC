@@ -30,7 +30,6 @@ public class PickUpObjects : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                PickedObject = ObjectToPickUp;
                 PickedObject.GetComponent<PickableObject>().isPickable = true;
                 PickedObject.transform.SetParent(null);
                 PickedObject.GetComponent<Rigidbody>().useGravity = true;
