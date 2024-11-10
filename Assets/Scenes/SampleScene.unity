@@ -660,8 +660,6 @@ GameObject:
   m_Component:
   - component: {fileID: 196158102}
   - component: {fileID: 196158105}
-  - component: {fileID: 196158104}
-  - component: {fileID: 196158103}
   m_Layer: 0
   m_Name: InteractionZone
   m_TagString: PlayerInteractionZone
@@ -684,44 +682,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1516010301}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &196158103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196158101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ffccab95ebf5ba4d9963dc015a84d3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectToPickUp: {fileID: 0}
-  PickedObject: {fileID: 0}
-  interactionZone: {fileID: 0}
---- !u!114 &196158104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196158101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7f1bf315e539064bac5b7102ec0b424, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontalControl: 0
-  verticalControl: 0
-  player: {fileID: 0}
-  speedPlayer: 0
-  gravity: 9.8
-  fallVelocity: 0
-  jumpForce: 0
-  mainCamera: {fileID: 0}
-  isOnSlope: 0
-  slideSpeed: 6
-  slopeForceDown: 6
 --- !u!65 &196158105
 BoxCollider:
   m_ObjectHideFlags: 0
