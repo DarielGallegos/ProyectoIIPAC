@@ -5510,7 +5510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773270364}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.025451476, y: 0.00000005999645, z: -0.0000000055971703, w: 0.99967605}
+  m_LocalRotation: {x: 0.02545149, y: 0.00000007468658, z: -0.000000008096119, w: 0.99967605}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8324,7 +8324,7 @@ GameObject:
   - component: {fileID: 1115838487}
   m_Layer: 0
   m_Name: Plataforma
-  m_TagString: Untagged
+  m_TagString: MovablePlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8370,7 +8370,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!65 &1115838488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9593,9 +9593,9 @@ MonoBehaviour:
   - {fileID: 1563835201}
   - {fileID: 487202220}
   - {fileID: 795823962}
-  platformSpeed: 1
+  platformSpeed: 10
   moveToTheNext: 1
-  waitTime: 2
+  waitTime: 0
 --- !u!1 &1257011197
 GameObject:
   m_ObjectHideFlags: 0
@@ -9774,7 +9774,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262496191}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.025320329, y: 0.0000000563277, z: -0.0000000033806422, w: 0.99967945}
+  m_LocalRotation: {x: -0.025320338, y: 0.00000007109903, z: -0.0000000040220383, w: 0.99967945}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11477,7 +11477,6 @@ GameObject:
   - component: {fileID: 1516010299}
   - component: {fileID: 1516010302}
   - component: {fileID: 1516010303}
-  - component: {fileID: 1516010304}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -11580,20 +11579,6 @@ MonoBehaviour:
   ObjectToPickUp: {fileID: 0}
   PickedObject: {fileID: 0}
   interactionZone: {fileID: 196158102}
---- !u!114 &1516010304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1516010298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3ff91d61f6ed744d8d76e7241a1106f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  positionThreshold: 0.1
-  rotationThreshold: 1
 --- !u!1 &1527841580
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     public float slideSpeed = 6.0f;
     public float slopeForceDown = 6.0f;
 
+    private Transform platformTransform; // Para rastrear la plataforma en la que está el jugador
+    private Vector3 previousPlatformPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,9 +42,9 @@ public class PlayerController : MonoBehaviour
 
         playerInput = new Vector3(horizontalControl, 0, verticalControl);
         playerInput = Vector3.ClampMagnitude(playerInput, 1);
-        
+
         camDirection();
-   
+
         movePlayer = playerInput.x * camRight + playerInput.z * camForward;
 
         movePlayer = movePlayer * speedPlayer;
@@ -52,6 +55,13 @@ public class PlayerController : MonoBehaviour
         SetGravity();
         PlayerSkills();
 
+        if (platformTransform != null)
+        {
+            Vector3 platformMovement = platformTransform.position - previousPlatformPosition;
+            movePlayer += platformMovement / Time.deltaTime;
+            previousPlatformPosition = platformTransform.position;
+        }
+
         //Tema de llamadas de movimiento
         player.Move(movePlayer * Time.deltaTime);
 
@@ -61,32 +71,33 @@ public class PlayerController : MonoBehaviour
 
     void camDirection()
     {
-         //Direccion hacia adelante y hacia la derecha de la camara 
-         camForward = mainCamera.transform.forward;
-         camRight = mainCamera.transform.right;
+        //Direccion hacia adelante y hacia la derecha de la camara 
+        camForward = mainCamera.transform.forward;
+        camRight = mainCamera.transform.right;
 
-         //Dejamos en 0 los valores de y que serian abajo y arriba 
-         camForward.y = 0; 
-         camRight.y = 0;
-    
-         //valor normalizado de las direccciones
-         camForward = camForward.normalized;
-         camRight = camRight.normalized;
+        //Dejamos en 0 los valores de y que serian abajo y arriba 
+        camForward.y = 0;
+        camRight.y = 0;
+
+        //valor normalizado de las direccciones
+        camForward = camForward.normalized;
+        camRight = camRight.normalized;
     }
 
     // Movimientos del jugador
-        public void PlayerSkills()
+    public void PlayerSkills()
+    {
+        if (player.isGrounded && Input.GetButtonDown("Jump"))
         {
-            if(player.isGrounded && Input.GetButtonDown("Jump")){
-                fallVelocity = jumpForce;
-                movePlayer.y = fallVelocity;
-            }
+            fallVelocity = jumpForce;
+            movePlayer.y = fallVelocity;
         }
+    }
 
     //Función para la gravedad
     void SetGravity()
     {
-        if(player.isGrounded)
+        if (player.isGrounded)
         {
             fallVelocity = -gravity * Time.deltaTime;
             movePlayer.y = fallVelocity;
@@ -100,13 +111,13 @@ public class PlayerController : MonoBehaviour
         slideDown();
     }
 
-    public void slideDown() 
+    public void slideDown()
     {
         isOnSlope = Vector3.Angle(Vector3.up, hitNormal) >= player.slopeLimit;
         if (isOnSlope)
         {
-            movePlayer.x += (hitNormal.x * (1f- hitNormal.y)) * slideSpeed;
-            movePlayer.z += (hitNormal.z * (1f- hitNormal.y)) * slideSpeed;
+            movePlayer.x += (hitNormal.x * (1f - hitNormal.y)) * slideSpeed;
+            movePlayer.z += (hitNormal.z * (1f - hitNormal.y)) * slideSpeed;
             movePlayer.y += slopeForceDown;
         }
     }
@@ -114,6 +125,17 @@ public class PlayerController : MonoBehaviour
     //Funcion para dectetar si el character controller colisiona con con colisionador
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        // Detectar si estamos sobre una plataforma móvil
+        if (hit.collider.CompareTag("MovablePlatform"))
+        {
+            platformTransform = hit.collider.transform;
+            previousPlatformPosition = platformTransform.position;
+        }
+        else
+        {
+            platformTransform = null;
+        }
+
         hitNormal = hit.normal;
     }
 }
