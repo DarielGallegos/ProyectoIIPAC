@@ -23,14 +23,19 @@ public class PlayerController : MonoBehaviour
 
     public float slideSpeed = 6.0f;
     public float slopeForceDown = 6.0f;
-
+    
     private Transform platformTransform; // Para rastrear la plataforma en la que está el jugador
     private Vector3 previousPlatformPosition;
+
+    
+    // Variables de animaciones
+    public Animator playerAnimatorController;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<CharacterController>();
+        playerAnimatorController  = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -42,6 +47,8 @@ public class PlayerController : MonoBehaviour
 
         playerInput = new Vector3(horizontalControl, 0, verticalControl);
         playerInput = Vector3.ClampMagnitude(playerInput, 1);
+
+        playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * speedPlayer) ;
 
         camDirection();
 
@@ -91,6 +98,8 @@ public class PlayerController : MonoBehaviour
         {
             fallVelocity = jumpForce;
             movePlayer.y = fallVelocity;
+
+            playerAnimatorController.SetTrigger("PlayerJump");
         }
     }
 
@@ -106,8 +115,10 @@ public class PlayerController : MonoBehaviour
         {
             fallVelocity -= gravity * Time.deltaTime;
             movePlayer.y = fallVelocity;
-        }
 
+            playerAnimatorController.SetFloat("PlayerVerticalVelocity", player.velocity.y);
+        }
+        playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
         slideDown();
     }
 
@@ -137,5 +148,9 @@ public class PlayerController : MonoBehaviour
         }
 
         hitNormal = hit.normal;
+    }
+
+    private void OnAnimatorMove(){
+        
     }
 }
